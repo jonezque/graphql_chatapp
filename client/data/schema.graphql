@@ -1,0 +1,103 @@
+type Root {
+	node(id: ID!): Node
+}
+
+interface Node {
+	id: ID!
+}
+
+type User implements Node {
+  id: ID!
+  username: String!
+  channels: [Channel]
+}
+
+type Channel implements Node {
+  id: ID!
+  name: String!
+  users: [User]
+  ownerId: ID!
+  owner: User!
+}
+
+type Message implements Node {
+  id: ID!
+  body: String!
+  owner: User!
+  ownerId: ID!
+  channel: Channel!
+  channelId: ID!
+  created: String!
+}
+
+type SignupPayload {
+  user: User!
+  token: String!
+}
+
+type SigninPayload {
+  user: User!
+  token: String!
+}
+
+type ChangeNamePayload {
+  user: User!
+}
+
+type CreateChannelPayload {
+  channel: Channel!
+}
+
+input SignupInput {
+  username: String!
+  password: String!
+}
+
+input SigninInput {
+  username: String!
+  password: String!
+}
+
+input ChangeNameInput {
+  username: String!
+}
+
+input CreateChannelInput {
+  name: String!
+}
+
+input SendMessageInput {
+  body: String!
+  channelId: ID!
+}
+
+type SendMessagePayload {
+  message: Message!
+}
+
+input PostInput {
+  channelId: ID!
+}
+
+type PostPayload {
+  message: Message!
+}
+
+type Mutation {
+  signin(input: SigninInput!): SigninPayload!
+  signup(input: SignupInput!): SignupPayload!
+  changeName(input: ChangeNameInput!): ChangeNamePayload!
+  createChannel(input: CreateChannelInput!): CreateChannelPayload!
+  send(input: SendMessageInput!): SendMessagePayload!
+}
+
+type Query {
+  user(id: ID!): User
+  me: User
+  myChannels: [Channel]!
+  channelMessages(channelId: ID!): [Message]!
+}
+
+type Subscription {
+  post(input: PostInput!): PostPayload!
+}

@@ -1,0 +1,138 @@
+$green: rgb(0, 255, 170);
+$darkblue: rgb(27, 0, 66);
+
+body {
+  margin: 0;
+  height: 100vh;
+  width: 100vw;
+  color: $green;
+  background-color: $darkblue;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+input {  
+  border-radius: 0.5rem;
+  padding: 0.2rem 1rem;
+  color: $darkblue;
+}
+
+* {
+  scroll-behavior: smooth;
+  box-sizing: content-box;
+  font-family: "Roboto", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  border: none;
+  text-decoration: none;
+  font-size: 18px;
+  color: $green;
+  outline: none;
+}
+
+button {
+  cursor: pointer;
+  background: transparent;
+}
+
+.fx-h {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.p-all {
+  padding: 1rem;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  > * {
+    margin: 0.5rem;
+    flex: 1;
+  }
+  height: 100%;
+}
+
+.centersign {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+  > * {
+    margin: 0.5rem;
+  }
+  height: 100%;
+}
+
+
+.link {
+  margin: 0 0.5rem;
+  color: $green;
+  min-width: 70px;
+}
+
+.alink {
+  font-weight: 600;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.w100 {
+  width: 100%;
+}
+
+.chat {
+  .messages {
+    background: rgb(41, 0, 102);
+    margin: 0 1rem;
+    border-radius: 0.5rem;
+    flex: 1;
+    padding: 1rem;
+    overflow: auto;
+    max-height: calc(100vh - 200px);
+  }
+
+  .chat--control {
+    display: flex;
+    margin: 1rem;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    .chat--input {
+      margin: 0;
+      flex: 1;
+    }
+    .chat--send {
+      padding: .2rem 0.5rem;
+      box-shadow: 0 0 3px $darkblue;
+      border-radius: 0.5rem;
+      background: white;
+      margin-left: 0.5rem;
+      :disabled {
+        color: grey;
+      }
+    }
+  }
+}
+
+.str {
+  display: flex;
+  justify-content: stretch;
+  align-items: stretch;
+  flex-direction: column;
+  height: 100%;
+}
+
+.pink {
+  color: rgb(255, 0, 119);
+}
