@@ -25,6 +25,7 @@ connection.then(() => {
             graphiql: true,
             schema,
         }),
+        
     );
 
     app.listen(PORT, () => {

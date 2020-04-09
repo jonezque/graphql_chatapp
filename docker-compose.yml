@@ -1,0 +1,22 @@
+version: '3.7'
+
+services:
+  fund-api:
+    container_name: fund-backend
+    build: ./api
+    command: npm run debug
+    ports:
+      - '3000:3000'
+      - '4200:4200'
+      - '49153:49153'
+    volumes:
+      - './api/src:/var/build/src'
+      - '/var/build/node_modules'
+  client-api:
+    container_name: fund-frontend
+    build: ./client
+    command: ng s --host 0.0.0.0 --port 4200 --proxy-config proxy.conf.json --poll 1
+    network_mode: service:fund-api
+    volumes:
+      - './client/src:/var/build/src'
+      - '/var/build/node_modules'

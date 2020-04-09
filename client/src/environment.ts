@@ -4,13 +4,15 @@ import {
   RecordSource,
   Store,
   FetchFunction,
+  SubscribeFunction,
 } from "relay-runtime";
-import { execute } from 'apollo-link';
-import { WebSocketLink } from 'apollo-link-ws';
-import { SubscriptionClient } from "subscriptions-transport-ws";
+import {
+  SubscriptionClient,
+  OperationOptions,
+} from "subscriptions-transport-ws";
 
-const http = 'http://localhost:4000/graphql';
-const ws = 'ws://localhost:4001/graphql';
+const http = "http://localhost:4000/graphql";
+const ws = "ws://localhost:4001/graphql";
 
 const setupFetch: FetchFunction = async (operation, variables) => {
   const headers: Headers = new Headers([
@@ -30,20 +32,24 @@ const setupFetch: FetchFunction = async (operation, variables) => {
   });
   return response.json();
 };
- 
+
 const subscriptionClient = new SubscriptionClient(ws, {
   reconnect: true,
-  connectionParams: { token: localStorage.getItem("token") }
+  connectionParams: { token: localStorage.getItem("token") },
 });
 
-
-const subscriptionLink = new WebSocketLink(subscriptionClient);
-
-const setupSubscription: any = (operation: any, variables: any) =>
-  execute(subscriptionLink, {
-    query: operation.text,
-    variables,
-  });
+const setupSubscription: SubscribeFunction = (request, variables) => {
+  return {
+    subscribe: subscriptionClient.request({
+      query: request.text!,
+      variables,
+      operationName: request.name,
+    }).subscribe,
+    dispose: () => {
+      console.log("dispose subscription");
+    },
+  };
+};
 
 const environment = new Environment({
   network: Network.create(setupFetch, setupSubscription),

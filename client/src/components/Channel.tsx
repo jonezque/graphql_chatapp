@@ -42,10 +42,11 @@ const Render: React.FC<{ channelId: string; messages: Message[]; user: User }> =
     window.addEventListener("keydown", cb);
     inputRef.current?.focus();
 
-    subscribeToChannel(channelId);
+    const unsubscribe = subscribeToChannel(channelId);
 
     return () => {
       window.removeEventListener("keydown", cb);
+      unsubscribe.dispose();
     };
   }, [cb, channelId]);
 

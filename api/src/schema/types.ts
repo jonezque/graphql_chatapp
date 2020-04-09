@@ -1,5 +1,6 @@
 import { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLList, GraphQLInputObjectType, GraphQLNonNull, GraphQLInterfaceType } from 'graphql';
 import { getUserById, getUsers } from '../services';
+import { BroadcasterResult } from 'typeorm/subscriber/BroadcasterResult';
 
 export const NodeInterface = new GraphQLInterfaceType({
     name: 'Node',
@@ -79,7 +80,7 @@ export const SigninPayload = new GraphQLObjectType({
     name: 'SigninPayload',
     fields: () => ({
         token: { type: new GraphQLNonNull(GraphQLString) },
-        user: { type: new GraphQLNonNull(UserType) },
+        user: { type: new GraphQLNonNull(UserType)},
     }),
 });
 

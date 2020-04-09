@@ -5,7 +5,7 @@ import {
     changeName,
 } from '../services';
 import { UserType, ChangeNamePayload, ChangeNameInput } from './types';
-import { shouldBeAuthorized } from './util';
+import { shouldBeAuthorized } from './utils';
 
 const mutation = new GraphQLObjectType({
     name: 'UserMutations',
@@ -29,19 +29,6 @@ const mutation = new GraphQLObjectType({
 const query = new GraphQLObjectType({
     name: 'UserQueries',
     fields: {
-        users: {
-            type: new GraphQLList(UserType),
-            resolve() {
-                return getUsers();
-            },
-        },
-        user: {
-            type: UserType,
-            args: { id: { type: new GraphQLNonNull(GraphQLID) } },
-            resolve(parentValue, { id }) {
-                return getUserById(id);
-            },
-        },
     },
 });
 

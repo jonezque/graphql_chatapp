@@ -1,7 +1,7 @@
 import { graphql } from "babel-plugin-relay/macro";
 import { requestSubscription } from "react-relay";
 import environment from "../environment";
-import { PostSubscription } from "./__generated__/PostSubscription.graphql";
+import { PostSubscriptionResponse, PostSubscriptionVariables } from "./__generated__/PostSubscription.graphql";
 import { GraphQLSubscriptionConfig } from "relay-runtime";
 
 const postSubscription = graphql`
@@ -19,22 +19,23 @@ const postSubscription = graphql`
 `;
 
 export const subscribeToChannel = (channelId: string) => {
-  const variables = {
+  const variables: PostSubscriptionVariables = {
     input: {
       channelId,
     },
   };
 
-  const subscriptionConfig: GraphQLSubscriptionConfig<PostSubscription> = {
+  const subscriptionConfig: GraphQLSubscriptionConfig<PostSubscriptionResponse> = {
     subscription: postSubscription,
     variables,
-    updater: (store, data: any) => {
+    updater: (store, data) => {
       const proxy = store.get(data.post.message.id)!;
       const messages = store.getRoot().getLinkedRecords(`channelMessages(channelId:"${channelId}")`) || [];
       messages.push(proxy);
       store.getRoot().setLinkedRecords(messages, `channelMessages(channelId:"${channelId}")`);
+      debugger;
     },
   };
 
-  requestSubscription<PostSubscription>(environment, subscriptionConfig);
+  return requestSubscription<PostSubscriptionResponse>(environment, subscriptionConfig);
 };
