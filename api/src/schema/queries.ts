@@ -15,7 +15,7 @@ export const query = new GraphQLObjectType({
         },
         me: {
             type: UserType,
-            resolve(_, req) {
+            resolve(_, __, req) {
                 return req.user;
             },
         },

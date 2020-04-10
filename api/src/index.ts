@@ -1,7 +1,6 @@
 import { subscribe, execute } from 'graphql';
 import express from 'express';
 import expressGraphQL from 'express-graphql';
-import { PORT, WS_PORT } from './config';
 import cors from 'cors';
 import { schema } from './schema';
 import { connection } from './db-init';
@@ -28,14 +27,14 @@ connection.then(() => {
         
     );
 
-    app.listen(PORT, () => {
-        console.log(`Listening on ${PORT}`);
+    app.listen(process.env.PORT, () => {
+        console.log(`Listening on ${process.env.PORT}`);
     });
 
     const ws = createServer(() => {});
 
-    ws.listen(WS_PORT, () => {
-        console.log(`WS Listening on ${WS_PORT}`);
+    ws.listen(process.env.WS_PORT, () => {
+        console.log(`WS Listening on ${process.env.WS_PORT}`);
     });
 
     SubscriptionServer.create(

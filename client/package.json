@@ -28,7 +28,8 @@
     "test": "react-scripts test",
     "relay": "relay-compiler --src ./src --schema ../schema/schema.graphql --language typescript",
     "generate": "zeus ./data/schema.graphql ./src/types --ts ",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "postinstall": "npm rebuild node-sass"
   },
   "eslintConfig": {
     "extends": "react-app"

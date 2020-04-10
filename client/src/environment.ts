@@ -8,7 +8,6 @@ import {
 } from "relay-runtime";
 import {
   SubscriptionClient,
-  OperationOptions,
 } from "subscriptions-transport-ws";
 
 const http = "http://localhost:4000/graphql";
@@ -19,9 +18,11 @@ const setupFetch: FetchFunction = async (operation, variables) => {
     ["Accept", "application/json"],
     ["Content-Type", "application/json"],
   ]);
+
   if (localStorage.getItem("token")) {
     headers.append("Authorization", "Bearer " + localStorage.getItem("token"));
   }
+
   const response = await fetch(http, {
     method: "POST",
     headers,

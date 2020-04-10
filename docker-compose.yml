@@ -1,22 +1,50 @@
 version: '3.7'
 
 services:
-  fund-api:
-    container_name: fund-backend
+  db:
+    image: mysql
+    restart: always
+    ports:
+      - 3307:3306
+    env_file: 
+      - ./.env
+    volumes:
+        - db_data:/var/lib/mysql #persistent data
+
+  api:
+    container_name: chat-back
     build: ./api
-    command: npm run debug
+    command: npm run start:cache
+    restart: always
+    env_file: 
+      - ./.env
+    environment: 
+      - DATABASE_HOST=db
+      - PORT=4000
+      - WS_PORT=4001
+    depends_on: 
+      - db
     ports:
       - '3000:3000'
-      - '4200:4200'
-      - '49153:49153'
+      - '4000:4000'
+      - '4001:4001'
+      - '35729:35729'
     volumes:
-      - './api/src:/var/build/src'
-      - '/var/build/node_modules'
-  client-api:
-    container_name: fund-frontend
+      - ./api:/var/build
+      - /var/build/node_modules
+
+  client:
+    container_name: chat-front
     build: ./client
-    command: ng s --host 0.0.0.0 --port 4200 --proxy-config proxy.conf.json --poll 1
-    network_mode: service:fund-api
+    command:  npm start
+    restart: always
+    tty: true
+    environment: 
+      - API=api
+    network_mode: service:api
     volumes:
-      - './client/src:/var/build/src'
+      - './client:/var/build'
       - '/var/build/node_modules'
+
+volumes:
+  db_data:

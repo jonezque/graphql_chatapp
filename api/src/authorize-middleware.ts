@@ -8,6 +8,7 @@ export const authorizeMiddleware = async(req: any, res: any, next: any) => {
             req.user = user;
         }
     }
+    
 
     return next();
 }

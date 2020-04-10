@@ -1,7 +1,4 @@
-import { MysqlConnectionOptions } from 'typeorm/driver/mysql/MysqlConnectionOptions';
-import config from './ormconfig.json';
+import { config } from './ormconfig';
 import { createConnection } from 'typeorm';
 
-const mysql:MysqlConnectionOptions = {...config, type: 'mysql' };
-
-export const connection = createConnection(mysql);
+export const connection = createConnection(config);

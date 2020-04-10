@@ -39,7 +39,7 @@ const App = () => (
       if (!props) {
       return <div>Loading...{JSON.stringify(props)}</div>;
       }
-
+      console.log(props)
       return (
         <div
           style={{ height: "100%", display: "flex", flexDirection: "column" }}

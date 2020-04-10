@@ -1,7 +1,9 @@
-FROM node:12-alpine
+FROM node:12
 WORKDIR /var/build
+ENV NODE_PATH=/var/build/node_modules
+ENV PATH=$PATH:/var/build/node_modules/.bin
+
 COPY ./package*.json ./
 RUN npm install
-RUN npm install -g @angular/cli
+
 COPY ./ ./
-EXPOSE 4200

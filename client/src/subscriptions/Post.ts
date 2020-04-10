@@ -33,7 +33,6 @@ export const subscribeToChannel = (channelId: string) => {
       const messages = store.getRoot().getLinkedRecords(`channelMessages(channelId:"${channelId}")`) || [];
       messages.push(proxy);
       store.getRoot().setLinkedRecords(messages, `channelMessages(channelId:"${channelId}")`);
-      debugger;
     },
   };
 
